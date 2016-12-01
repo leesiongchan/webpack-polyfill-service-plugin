@@ -22,6 +22,7 @@ PolyfillsPlugin.prototype.apply = function(compiler) {
 				if (!chunkIsInitial) return;
 				PolyfillService.getPolyfillString(self.options).then(function(bundleString) {
 					chunk.files.forEach(function(file, i) {
+						if (!file.endsWith('.js')) return;
 						compilation.assets[file] = new ConcatSource("/* Polyfills */\n", bundleString, compilation.assets[file]);
 						callback();
 					});
